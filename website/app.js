@@ -15,6 +15,26 @@ const generate = document.getElementById("generate")
 
 
 //fetch data function
+function updateUserInterface(obj) {
+    //catching element
+    const date = document.getElementById("date")
+    const temp = document.getElementById("temp")
+    const feelingOut = document.getElementById("feelingOut")
+    const weather = document.getElementById("content")
+    const windSpeed = document.getElementById("wind")
+
+
+    date.innerHTML = "Date : " + obj.date
+    temp.innerHTML = "Temperture : " + obj.temp
+    weather.innerHTML = "Weather :  " + obj.weather
+    feelingOut.innerHTML = "Feeling : " + obj.feeling
+    windSpeed.innerHTML = "Wind Speed : " + obj.windSpeed
+
+
+    //updating data
+
+
+}
 
 const getData = async () => {
     try {
@@ -37,7 +57,7 @@ const getData = async () => {
 
                 let temp = data.main.temp
                 let place = data.sys.country
-                let weather = `id : ${data.weather[0].id} , main :${data.weather[0].main} ,discription:${data.weather[0].description} `
+                let weather = ` ${data.weather[0].main} , ${data.weather[0].description} `
                 let windSpeed = data.wind.speed
 
                 // console.log(temp)
@@ -68,6 +88,11 @@ const getData = async () => {
                 const response = await fetch("/getWeather")
                 const final = await response.json()
                 console.log(final)
+
+
+
+
+                updateUserInterface(final)
             }
         }
 
@@ -83,3 +108,7 @@ const getData = async () => {
 }
 
 generate.addEventListener('click', getData)
+
+
+
+
