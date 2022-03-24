@@ -85,7 +85,7 @@ button{
     box-shadow: 2px 4px 5px #444;
     transition: 1s;
 }
-button:hover{
+button :after{
     background: #8d9ec2;
     color: #000000fb;
 }
