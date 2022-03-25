@@ -1,7 +1,7 @@
 /* Global Variables */
 
 
-const apiKey = "45020210bbd6bb4e6353d10d9636b814"
+const apiKey = "45020210bbd6bb4e6353d10d9636b814&units=imperial"
 
 
 // Create a new date instance dynamically with JS
@@ -14,27 +14,8 @@ let newDate = d.getMonth() + 1 + '.' + d.getDate() + '.' + d.getFullYear()
 const generate = document.getElementById("generate")
 
 
-//fetch data function
-function updateUserInterface(obj) {
-    //catching element
-    const date = document.getElementById("date")
-    const temp = document.getElementById("temp")
-    const feelingOut = document.getElementById("feelingOut")
-    const weather = document.getElementById("content")
-    const windSpeed = document.getElementById("wind")
 
 
-    date.innerHTML = "Date : " + obj.date
-    temp.innerHTML = "Temperture : " + obj.temp
-    weather.innerHTML = "Weather :  " + obj.weather
-    feelingOut.innerHTML = "Feeling : " + obj.feeling
-    windSpeed.innerHTML = "Wind Speed : " + obj.windSpeed
-
-
-    //updating data
-
-
-}
 
 const getData = async () => {
     try {
@@ -55,35 +36,66 @@ const getData = async () => {
             } else {
 
 
-                let temp = data.main.temp
-                let place = data.sys.country
-                let weather = ` ${data.weather[0].main} , ${data.weather[0].description} `
-                let windSpeed = data.wind.speed
+
 
                 // console.log(temp)
                 // console.log(place)
                 // console.log(weather)
                 // console.log(windSpeed)
                 // console.log(feeling)
+                async function postData(url, data) {
 
-                await fetch('/getWeather', {
+                    let temp = data.main.temp
+                    let place = data.sys.country
+                    let weather = ` ${data.weather[0].main} , ${data.weather[0].description} `
+                    let windSpeed = data.wind.speed
 
-                    method: "post",
-                    headers: {
-                        "Content-Type": "application/json"
+                    await fetch(url, {
 
-                    },
-                    body: JSON.stringify({
+                        method: "post",
+                        headers: {
+                            "Content-Type": "application/json"
 
-                        date: newDate,
-                        temp: temp,
-                        feeling: feeling,
+                        },
+                        body: JSON.stringify({
 
-                        place: place,
-                        weather: weather,
-                        windSpeed: windSpeed
+                            date: newDate,
+                            temp: temp,
+                            feeling: feeling,
+
+                            place: place,
+                            weather: weather,
+                            windSpeed: windSpeed
+                        })
                     })
-                })
+
+                }
+
+                //fetch data function
+                async function updateUserInterface(obj) {
+                    //catching element
+                    const date = document.getElementById("date")
+                    const temp = document.getElementById("temp")
+                    const feelingOut = document.getElementById("feelingOut")
+                    const weather = document.getElementById("content")
+                    const windSpeed = document.getElementById("wind")
+
+
+                    date.innerHTML = "Date : " + obj.date
+                    temp.innerHTML = "Temperture : " + obj.temp
+                    weather.innerHTML = "Weather :  " + obj.weather
+                    feelingOut.innerHTML = "Feeling : " + obj.feeling
+                    windSpeed.innerHTML = "Wind Speed : " + obj.windSpeed
+
+
+                    //updating data
+
+
+                }
+
+
+                //post data call
+                await postData("/getWeather", data)
 
                 const response = await fetch("/getWeather")
                 const final = await response.json()
@@ -92,7 +104,7 @@ const getData = async () => {
 
 
 
-                updateUserInterface(final)
+                await updateUserInterface(final)
             }
         }
 

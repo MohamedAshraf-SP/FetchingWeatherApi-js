@@ -1,19 +1,19 @@
 // Setup empty JS object to act as endpoint for all routes
 projectData = {};
-port = process.env.PORT || 3000
+
 
 
 // Require Express to run server and routes
 const express = require('express')
 const cors = require('cors')
 const bodyParser = require('body-Parser');
-const { get } = require('http');
+require('dotenv').config()
 
 // Start up an instance of app
 
 const app = express()
 
-
+port = process.env.PORT || 3000
 
 /* Middleware*/
 //Here we are configuring express to use body-parser as middle-ware.
